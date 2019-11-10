@@ -1,0 +1,1769 @@
+[
+    [
+        "HPC Login Node - gowonda",
+        "HPC Login Node - gowonda2",
+        "GPU Interactive Session",
+        "Standard Interactive Session"
+    ],
+    {
+        "GPU Interactive Session": {
+            "__class__": "siteConfig",
+            "__module__": "siteConfig",
+            "agent": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": null,
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "authURL": null,
+            "authorizedKeysFile": null,
+            "dbusSessionBusAddress": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"/usr/bin/ssh {execHost} 'export DISPLAY={vncDisplay};timeout 15 /usr/local/bin/cat_dbus_session_file.sh'\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "^DBUS_SESSION_BUS_ADDRESS=(?P<dbusSessionBusAddress>.*)$"
+                ],
+                "requireMatch": true
+            },
+            "defaults": {
+                "jobParams_hours": 10,
+                "jobParams_mem": 4,
+                "jobParams_ppn": 1
+            },
+            "directConnect": false,
+            "displayStrings": {
+                "__class__": "sshKeyDistDisplayStrings",
+                "__module__": "siteConfig",
+                "createNewKeyDialogNewPassphraseEmptyForbidden": "Sorry, empty passphrases are forbidden.",
+                "createNewKeyDialogNewPassphraseMismatch": "Passphrases don't match",
+                "createNewKeyDialogNewPassphraseTooShort": "Passphrase is too short.",
+                "helpEmailAddress": "help@massive.org.au",
+                "networkError": "It looks like a network error has occured. You may be able to resume your work by logging in again.",
+                "newPassphrase": "Please enter a new passphrase",
+                "newPassphraseEmptyForbidden": "Sorry, you can't use an empty passphrase. Please enter a new passphrase",
+                "newPassphraseMismatch": "Sorry, the passphrases don't match. Please enter a new passphrase",
+                "newPassphraseTitle": "Please enter a new passphrase",
+                "newPassphraseTooShort": "Sorry, the passphrase must be at least six character long. Please enter a new passphrase",
+                "passphrasePrompt": "Please enter the passphrase for you ssh key",
+                "passphrasePromptIncorrect": "Sorry, that passphrase was incorrect.\nPlease enter the passphrase for you SSH Key\nIf you have forgoten the passphrase for you key, you may need to delete it and create a new key.\nYou can find this option under the Identity menu.\n",
+                "passphrasePromptIncorrectl": "Sorry, that passphrase was incorrect. Please enter the passphrase for your ssh key",
+                "passwdPrompt": "Please enter the password for your Griffith account.",
+                "passwdPromptIncorrect": "Sorry, that password was incorrect.\nPlease enter the password for your Griffith account.",
+                "persistentMessage": "Would you like to leave your current session running so that you can reconnect later?",
+                "persistentMessagePersist": "Leave it running",
+                "persistentMessageStop": "Stop the desktop",
+                "qdelQueuedJob": "It looks like you've been waiting for a job to start.\nDo you want me to delete the job or leave it in the queue so you can reconnect later?\n",
+                "qdelQueuedJobNOOP": "Leave it in the queue (I'll reconnect later)",
+                "qdelQueuedJobQdel": "Delete the job",
+                "reconnectMessage": "An Existing Desktop was found. Would you like to reconnect or kill it and start a new desktop?",
+                "reconnectMessageNo": "New desktop",
+                "reconnectMessageYes": "Reconnect",
+                "temporaryKey": "\nWould you like to use the launchers old behaviour (entering a password every time you start a new desktop) or try the new behaviour (creating an ssh key pair and entering a passphrase the first time you use the launcher after reboot.)\n\nPasswords are recomended if this is a shared user account.\n\nSSH Keys are recommended if you are the only person who uses this account.\n\nThis option can be changed from the Identity menu.\n",
+                "temporaryKeyNo": "Use my SSH Key",
+                "temporaryKeyYes": "Use my password every time"
+            },
+            "displayWebDavInfoDialogOnRemoteDesktop": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"/usr/bin/ssh {execHost} 'echo -e \\\"You can access your local home directory in Nautilus File Browser, using the location:\\n\\ndav://{localUsername}@localhost:{remoteWebDavPortNumber}/{homeDirectoryWebDavShareName}\\n\\nYour one-time password is {vncPasswd}\\\" > ~/.vnc/\\$(hostname){vncDisplay}-webdav.txt'\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "execHost": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\" qstat -f {jobidNumber} | grep exec_host\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "^\\s*exec_host = (?P<execHost>[a-z]+[0-9]+)"
+                ],
+                "requireMatch": true
+            },
+            "getProjects": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"groups | sed 's@ @\\n@g'\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "^\\s*(?P<group>\\S+)\\s*$"
+                ],
+                "requireMatch": true
+            },
+            "listAll": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"qstat -u {username} | tail -n +6\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "^\\s*(?P<jobid>(?P<jobidNumber>[0-9]+).\\S+)\\s+\\S+\\s+\\S+\\s+(?P<jobname>INTERACT)\\s+(?P<sessionID>\\S+)\\s+(?P<nodes>\\S+)\\s+(?P<tasks>\\S+)\\s+(?P<mem>\\S+)\\s+(?P<reqTime>\\S+)\\s+(?P<state>[^C])\\s+(?P<elapTime>\\S+)\\s*$"
+                ],
+                "requireMatch": false
+            },
+            "loginHost": "gowonda2.rcs.griffith.edu.au",
+            "messageRegexs": [
+                {
+                    "__class__": "__regex__",
+                    "pattern": "^INFO:(?P<info>.*(?:\n|\r\n?))"
+                },
+                {
+                    "__class__": "__regex__",
+                    "pattern": "^WARN:(?P<warn>.*(?:\n|\r\n?))"
+                },
+                {
+                    "__class__": "__regex__",
+                    "pattern": "^ERROR:(?P<error>.*(?:\n|\r\n?))"
+                }
+            ],
+            "onConnectScript": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"/usr/bin/ssh {execHost} 'module load keyutility ; mountUtility.py'\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "openWebDavShareInRemoteFileBrowser": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"/usr/bin/ssh {execHost} \\\"export DBUS_SESSION_BUS_ADDRESS={dbusSessionBusAddress};/usr/bin/gconftool-2 --type=Boolean --set /apps/nautilus/preferences/always_use_location_entry true {ampersand}{ampersand} DISPLAY={vncDisplay} xdg-open dav://{localUsername}@localhost:{remoteWebDavPortNumber}/{homeDirectoryWebDavShareName}\\\"\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "otp": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "'cat ~/.vnc/clearpass'",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "^(?P<vncPasswd>\\S+)$"
+                ],
+                "requireMatch": true
+            },
+            "relabel": {
+                "label_ppn": "CPUs"
+            },
+            "runSanityCheck": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": null,
+                "failFatal": false,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "running": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"/sw/sysadmin/sysadmin/strudel-scripts/log-strudel-node-usage ; qstat -f {jobidNumber} \"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    ".*job_state = R.*"
+                ],
+                "requireMatch": true
+            },
+            "setDisplayResolution": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": null,
+                "failFatal": false,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "showStart": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": null,
+                "failFatal": false,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "siteRanges": {
+                "jobParams_ppn": [
+                    1,
+                    16
+                ]
+            },
+            "startServer": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\" /sw/sysadmin/sysadmin/strudel-scripts/startup-checker.sh ; rm -f ~/.vnc/clearpass ; touch ~/.vnc/clearpass ; chmod 600 ~/.vnc/clearpass ; passwd=\"'$'\"( dd if=/dev/urandom bs=1 count=8 2>/dev/null | md5sum | cut -b 1-8 ) ; echo \"'$'\"passwd > ~/.vnc/clearpass ; cat ~/.vnc/clearpass | vncpasswd -f > ~/.vnc/passwd ; chmod 600 ~/.vnc/passwd ;  echo \\\" /sw/sysadmin/sysadmin/strudel-scripts/remove-old-vnc-pids.sh ; /sw/sysadmin/sysadmin/strudel-scripts/vnc-log-delete.sh ; vncserver -geometry {resolution} ; sleep 10000000000\\\" | qsub -l ncpus={ppn},queue=gpu,walltime={hours},mem={mem}g,ngpus=1 -N INTERACT  -o .vnc/ -e .vnc/ \"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "^(?P<jobid>(?P<jobidNumber>[0-9]+)\\.\\S+)\\s*$"
+                ],
+                "requireMatch": true
+            },
+            "stop": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\" qdel {jobidNumber}\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "stopForRestart": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"qdel {jobidNumber}\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "tunnel": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": true,
+                "cmd": "{sshBinary} -A -c {cipher} -t -t -oStrictHostKeyChecking=no -L {localPortNumber}:{execHost}:{remotePortNumber} -l {username} {loginHost} \"echo tunnel_hello; bash\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "local",
+                "loop": false,
+                "regex": [
+                    "tunnel_hello"
+                ],
+                "requireMatch": true
+            },
+            "username": null,
+            "visibility": {
+                "advancedCheckBoxPanel": true,
+                "cipherPanel": "Advanced",
+                "debugCheckBoxPanel": "Advanced",
+                "jobParams_hours": true,
+                "jobParams_mem": true,
+                "jobParams_nodes": false,
+                "jobParams_ppn": true,
+                "label_hours": false,
+                "label_mem": true,
+                "label_nodes": false,
+                "label_ppn": true,
+                "resolutionPanel": "Advanced",
+                "resourcePanel": true,
+                "usernamePanel": true
+            },
+            "vncDisplay": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "'cat ~/.vnc/{execHost}*.log'",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "port 59(?P<vncDisplay>[0-9]+)"
+                ],
+                "requireMatch": true
+            },
+            "webDavCloseWindow": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"/usr/bin/ssh {execHost} 'export DBUS_SESSION_BUS_ADDRESS={dbusSessionBusAddress};export DISPLAY={vncDisplay}; wmctrl -F -i -c {webDavWindowID}'\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "webDavIntermediatePort": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"/usr/local/bin/get_ephemeral_port.py\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "exec",
+                "loop": false,
+                "regex": [
+                    "^(?P<intermediateWebDavPortNumber>[0-9]+)$"
+                ],
+                "requireMatch": true
+            },
+            "webDavMount": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"/usr/bin/ssh {execHost} \\\"export DBUS_SESSION_BUS_ADDRESS={dbusSessionBusAddress};echo \\\\\\\"import pexpect;child = pexpect.spawn('gvfs-mount dav://{localUsername}@localhost:{remoteWebDavPortNumber}/{homeDirectoryWebDavShareName}');child.expect('Password: ');child.sendline('{vncPasswd}');child.expect(pexpect.EOF);child.close();print 'gvfs-mount returned ' + str(child.exitstatus)\\\\\\\" {pipe} python\\\"\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "^gvfs-mount returned (?P<webDavMountingExitCode>.*)$"
+                ],
+                "requireMatch": true
+            },
+            "webDavRemotePort": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"/usr/local/bin/get_ephemeral_port.py\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "exec",
+                "loop": false,
+                "regex": [
+                    "^(?P<remoteWebDavPortNumber>[0-9]+)$"
+                ],
+                "requireMatch": true
+            },
+            "webDavTunnel": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": true,
+                "cmd": "{sshBinary} -A -c {cipher} -t -t -oStrictHostKeyChecking=no -oExitOnForwardFailure=yes -R {remoteWebDavPortNumber}:localhost:{localWebDavPortNumber} -l {username} {execHost} \"echo tunnel_hello; bash\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "local",
+                "loop": false,
+                "regex": [
+                    "tunnel_hello"
+                ],
+                "requireMatch": true
+            },
+            "webDavUnmount": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"/usr/bin/ssh {execHost} 'export DBUS_SESSION_BUS_ADDRESS={dbusSessionBusAddress};export DISPLAY={vncDisplay};timeout 1 gvfs-mount --unmount-scheme dav'\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "webDavWindowID": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"/usr/bin/ssh {execHost} 'export DBUS_SESSION_BUS_ADDRESS={dbusSessionBusAddress}; DISPLAY={vncDisplay} xwininfo -root -tree'\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "^\\s+(?P<webDavWindowID>\\S+)\\s+\"{homeDirectoryWebDavShareName}.*Browser.*$"
+                ],
+                "requireMatch": true
+            }
+        },
+        "HPC Login Node - gowonda": {
+            "__class__": "siteConfig",
+            "__module__": "siteConfig",
+            "agent": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": true,
+                "cmd": "{sshBinary} -A -c {cipher} -t -t -oStrictHostKeyChecking=no -l {username} {loginHost} \"echo agent_hello; bash \"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "local",
+                "loop": false,
+                "regex": [
+                    "agent_hello"
+                ],
+                "requireMatch": true
+            },
+            "authURL": null,
+            "authorizedKeysFile": null,
+            "dbusSessionBusAddress": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"export DISPLAY={vncDisplay};timeout 15 /usr/local/bin/cat_dbus_session_file.sh\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "^DBUS_SESSION_BUS_ADDRESS=(?P<dbusSessionBusAddress>.*)$"
+                ],
+                "requireMatch": true
+            },
+            "defaults": {},
+            "directConnect": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": null,
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "displayStrings": {
+                "__class__": "sshKeyDistDisplayStrings",
+                "__module__": "siteConfig",
+                "createNewKeyDialogNewPassphraseMismatch": "Passphrases don't match",
+                "helpEmailAddress": "help@massive.org.au",
+                "networkError": "It looks like a network error has occured. You may be able to resume your work by logging in again.",
+                "newPassphrase": "Please enter a new passphrase",
+                "newPassphraseEmptyForbidden": "Sorry, you can't use an empty passphrase. Please enter a new passphrase",
+                "newPassphraseMismatch": "Sorry, the passphrases don't match. Please enter a new passphrase",
+                "newPassphraseTitle": "Please enter a new passphrase",
+                "newPassphraseTooShort": "Sorry, the passphrase must be at least six character long. Please enter a new passphrase",
+                "passphrasePrompt": "Please enter the passphrase for you ssh key",
+                "passphrasePromptIncorrectl": "Sorry, that passphrase was incorrect. Please enter the passphrase for your ssh key",
+                "passwdPrompt": "Please enter the password for your Griffith account.",
+                "passwdPromptIncorrect": "Sorry, that password was incorrect.\nPlease enter the password for your Griffith account.",
+                "persistentMessage": "Would you like to leave your current session running so that you can reconnect later?",
+                "persistentMessagePersist": "Leave it running",
+                "persistentMessageStop": "Stop the desktop",
+                "qdelQueuedJob": "It looks like you've been waiting for a job to start.\nDo you want me to delete the job or leave it in the queue so you can reconnect later?\n",
+                "qdelQueuedJobNOOP": "Leave it in the queue (I'll reconnect later)",
+                "qdelQueuedJobQdel": "Delete the job",
+                "reconnectMessage": "An Existing Desktop was found. Would you like to reconnect or kill it and start a new desktop?",
+                "reconnectMessageNo": "New desktop",
+                "reconnectMessageYes": "Reconnect",
+                "temporaryKey": "\nWould you like to use the launchers old behaviour (entering a password every time you start a new desktop) or try the new behaviour (creating an ssh key pair and entering a passphrase the first time you use the launcher after reboot.)\n\nPasswords are recomended if this is a shared user account.\n\nSSH Keys are recommended if you are the only person who uses this account.\n\nThis option can be changed from the Identity menu.\n",
+                "temporaryKeyNo": "Use my SSH Key",
+                "temporaryKeyYes": "Use my password every time"
+            },
+            "displayWebDavInfoDialogOnRemoteDesktop": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": null,
+                "failFatal": false,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "execHost": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": null,
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "getProjects": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": null,
+                "failFatal": false,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "listAll": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "'/sw/sysadmin/sysadmin/strudel-scripts/log-strudel-usage ; ls ~/.vnc/`hostname`*pid'",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "^\\S+(?P<vncDisplay>:[0-9]+).pid$"
+                ],
+                "requireMatch": false
+            },
+            "loginHost": "gowonda2.rcs.griffith.edu.au",
+            "messageRegexs": [
+                {
+                    "__class__": "__regex__",
+                    "pattern": "^INFO:(?P<info>.*(?:\n|\r\n?))"
+                },
+                {
+                    "__class__": "__regex__",
+                    "pattern": "^WARN:(?P<warn>.*(?:\n|\r\n?))"
+                },
+                {
+                    "__class__": "__regex__",
+                    "pattern": "^ERROR:(?P<error>.*(?:\n|\r\n?))"
+                }
+            ],
+            "onConnectScript": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": null,
+                "failFatal": false,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "openWebDavShareInRemoteFileBrowser": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"/usr/bin/ssh -oStrictHostKeyChecking=no localhost \\\"export DBUS_SESSION_BUS_ADDRESS={dbusSessionBusAddress};/usr/bin/gconftool-2 --type=Boolean --set /apps/nautilus/preferences/always_use_location_entry true {ampersand}{ampersand} DISPLAY={vncDisplay} xdg-open dav://{localUsername}@localhost:{remoteWebDavPortNumber}/{homeDirectoryWebDavShareName}\\\"\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "otp": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "'cat ~/.vnc/clearpass'",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "^(?P<vncPasswd>\\S+)$"
+                ],
+                "requireMatch": true
+            },
+            "relabel": {},
+            "runSanityCheck": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": null,
+                "failFatal": false,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "running": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": null,
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "setDisplayResolution": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": null,
+                "failFatal": false,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "showStart": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": null,
+                "failFatal": false,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "siteRanges": {
+                "jobParams_hours": [
+                    1,
+                    336
+                ],
+                "jobParams_mem": [
+                    1,
+                    1024
+                ],
+                "jobParams_nodes": [
+                    1,
+                    10
+                ],
+                "jobParams_ppn": [
+                    1,
+                    12
+                ]
+            },
+            "startServer": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\" /sw/sysadmin/sysadmin/strudel-scripts/startup-checker.sh ; rm -f ~/.vnc/clearpass ; touch ~/.vnc/clearpass ; chmod 600 ~/.vnc/clearpass ; passwd=\"'$'\"( dd if=/dev/urandom bs=1 count=8 2>/dev/null | md5sum | cut -b 1-8 ) ; echo \"'$'\"passwd > ~/.vnc/clearpass ; cat ~/.vnc/clearpass | vncpasswd -f > ~/.vnc/passwd ; chmod 600 ~/.vnc/passwd ; vncserver -geometry {resolution}\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "^.*?desktop is \\S+(?P<vncDisplay>:[0-9]+)\\s*$"
+                ],
+                "requireMatch": true
+            },
+            "stop": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "'vncserver -kill {vncDisplay}'",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "stopForRestart": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "'vncserver -kill {vncDisplay}'",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "tunnel": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": true,
+                "cmd": "{sshBinary} -A -c {cipher} -t -t -oStrictHostKeyChecking=no -L {localPortNumber}:localhost:{remotePortNumber} -l {username} {loginHost} \"echo tunnel_hello; bash\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "local",
+                "loop": false,
+                "regex": [
+                    "tunnel_hello"
+                ],
+                "requireMatch": true
+            },
+            "username": null,
+            "visibility": {
+                "advancedCheckBoxPanel": true,
+                "cipherPanel": "Advanced",
+                "debugCheckBoxPanel": "Advanced",
+                "loginHostPanel": false,
+                "optionsDialog": false,
+                "projectPanel": false,
+                "resolutionPanel": "Advanced",
+                "resourcePanel": false,
+                "usernamePanel": true
+            },
+            "vncDisplay": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": null,
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "webDavCloseWindow": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"export DBUS_SESSION_BUS_ADDRESS={dbusSessionBusAddress};export DISPLAY={vncDisplay}; wmctrl -F -i -c {webDavWindowID}\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "webDavIntermediatePort": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": null,
+                "failFatal": false,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "webDavMount": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"/usr/bin/ssh -oStrictHostKeyChecking=no localhost \\\"export DBUS_SESSION_BUS_ADDRESS={dbusSessionBusAddress};echo \\\\\\\"import pexpect;child = pexpect.spawn('gvfs-mount dav://{localUsername}@localhost:{remoteWebDavPortNumber}/{homeDirectoryWebDavShareName}');child.expect('Password: ');child.sendline('{vncPasswd}');child.expect(pexpect.EOF);child.close();print 'gvfs-mount returned ' + str(child.exitstatus)\\\\\\\" {pipe} python\\\"\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "^gvfs-mount returned (?P<webDavMountingExitCode>.*)$"
+                ],
+                "requireMatch": true
+            },
+            "webDavRemotePort": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"/usr/local/bin/get_ephemeral_port.py\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "^(?P<remoteWebDavPortNumber>[0-9]+)$"
+                ],
+                "requireMatch": true
+            },
+            "webDavTunnel": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": true,
+                "cmd": "{sshBinary} -A -c {cipher} -t -t -oStrictHostKeyChecking=no -oExitOnForwardFailure=yes -R {remoteWebDavPortNumber}:localhost:{localWebDavPortNumber} -l {username} {loginHost} 'echo tunnel_hello; bash'",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "local",
+                "loop": false,
+                "regex": [
+                    "tunnel_hello"
+                ],
+                "requireMatch": true
+            },
+            "webDavUnmount": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"export DBUS_SESSION_BUS_ADDRESS={dbusSessionBusAddress};export DISPLAY={vncDisplay};timeout 1 gvfs-mount --unmount-scheme dav\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "webDavWindowID": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"export DBUS_SESSION_BUS_ADDRESS={dbusSessionBusAddress}; DISPLAY={vncDisplay} xwininfo -root -tree\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "^\\s+(?P<webDavWindowID>\\S+)\\s+\"{homeDirectoryWebDavShareName}.*Browser.*$"
+                ],
+                "requireMatch": true
+            }
+        },
+        "HPC Login Node - gowonda2": {
+            "__class__": "siteConfig",
+            "__module__": "siteConfig",
+            "agent": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": true,
+                "cmd": "{sshBinary} -A -c {cipher} -t -t -oStrictHostKeyChecking=no -l {username} {loginHost} \"echo agent_hello; bash \"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "local",
+                "loop": false,
+                "regex": [
+                    "agent_hello"
+                ],
+                "requireMatch": true
+            },
+            "authURL": null,
+            "authorizedKeysFile": null,
+            "dbusSessionBusAddress": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"export DISPLAY={vncDisplay};timeout 15 /usr/local/bin/cat_dbus_session_file.sh\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "^DBUS_SESSION_BUS_ADDRESS=(?P<dbusSessionBusAddress>.*)$"
+                ],
+                "requireMatch": true
+            },
+            "defaults": {},
+            "directConnect": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": null,
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "displayStrings": {
+                "__class__": "sshKeyDistDisplayStrings",
+                "__module__": "siteConfig",
+                "createNewKeyDialogNewPassphraseMismatch": "Passphrases don't match",
+                "helpEmailAddress": "help@massive.org.au",
+                "networkError": "It looks like a network error has occured. You may be able to resume your work by logging in again.",
+                "newPassphrase": "Please enter a new passphrase",
+                "newPassphraseEmptyForbidden": "Sorry, you can't use an empty passphrase. Please enter a new passphrase",
+                "newPassphraseMismatch": "Sorry, the passphrases don't match. Please enter a new passphrase",
+                "newPassphraseTitle": "Please enter a new passphrase",
+                "newPassphraseTooShort": "Sorry, the passphrase must be at least six character long. Please enter a new passphrase",
+                "passphrasePrompt": "Please enter the passphrase for you ssh key",
+                "passphrasePromptIncorrectl": "Sorry, that passphrase was incorrect. Please enter the passphrase for your ssh key",
+                "passwdPrompt": "Please enter the password for your Griffith account.",
+                "passwdPromptIncorrect": "Sorry, that password was incorrect.\nPlease enter the password for your Griffith account.",
+                "persistentMessage": "Would you like to leave your current session running so that you can reconnect later?",
+                "persistentMessagePersist": "Leave it running",
+                "persistentMessageStop": "Stop the desktop",
+                "qdelQueuedJob": "It looks like you've been waiting for a job to start.\nDo you want me to delete the job or leave it in the queue so you can reconnect later?\n",
+                "qdelQueuedJobNOOP": "Leave it in the queue (I'll reconnect later)",
+                "qdelQueuedJobQdel": "Delete the job",
+                "reconnectMessage": "An Existing Desktop was found. Would you like to reconnect or kill it and start a new desktop?",
+                "reconnectMessageNo": "New desktop",
+                "reconnectMessageYes": "Reconnect",
+                "temporaryKey": "\nWould you like to use the launchers old behaviour (entering a password every time you start a new desktop) or try the new behaviour (creating an ssh key pair and entering a passphrase the first time you use the launcher after reboot.)\n\nPasswords are recomended if this is a shared user account.\n\nSSH Keys are recommended if you are the only person who uses this account.\n\nThis option can be changed from the Identity menu.\n",
+                "temporaryKeyNo": "Use my SSH Key",
+                "temporaryKeyYes": "Use my password every time"
+            },
+            "displayWebDavInfoDialogOnRemoteDesktop": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": null,
+                "failFatal": false,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "execHost": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": null,
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "getProjects": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": null,
+                "failFatal": false,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "listAll": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "'/sw/sysadmin/sysadmin/strudel-scripts/log-strudel-usage ; ls ~/.vnc/`hostname`*pid'",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "^\\S+(?P<vncDisplay>:[0-9]+).pid$"
+                ],
+                "requireMatch": false
+            },
+            "loginHost": "gowonda2.rcs.griffith.edu.au",
+            "messageRegexs": [
+                {
+                    "__class__": "__regex__",
+                    "pattern": "^INFO:(?P<info>.*(?:\n|\r\n?))"
+                },
+                {
+                    "__class__": "__regex__",
+                    "pattern": "^WARN:(?P<warn>.*(?:\n|\r\n?))"
+                },
+                {
+                    "__class__": "__regex__",
+                    "pattern": "^ERROR:(?P<error>.*(?:\n|\r\n?))"
+                }
+            ],
+            "onConnectScript": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": null,
+                "failFatal": false,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "openWebDavShareInRemoteFileBrowser": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"/usr/bin/ssh -oStrictHostKeyChecking=no localhost \\\"export DBUS_SESSION_BUS_ADDRESS={dbusSessionBusAddress};/usr/bin/gconftool-2 --type=Boolean --set /apps/nautilus/preferences/always_use_location_entry true {ampersand}{ampersand} DISPLAY={vncDisplay} xdg-open dav://{localUsername}@localhost:{remoteWebDavPortNumber}/{homeDirectoryWebDavShareName}\\\"\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "otp": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "'cat ~/.vnc/clearpass'",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "^(?P<vncPasswd>\\S+)$"
+                ],
+                "requireMatch": true
+            },
+            "relabel": {},
+            "runSanityCheck": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": null,
+                "failFatal": false,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "running": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": null,
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "setDisplayResolution": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": null,
+                "failFatal": false,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "showStart": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": null,
+                "failFatal": false,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "siteRanges": {
+                "jobParams_hours": [
+                    1,
+                    336
+                ],
+                "jobParams_mem": [
+                    1,
+                    1024
+                ],
+                "jobParams_nodes": [
+                    1,
+                    10
+                ],
+                "jobParams_ppn": [
+                    1,
+                    12
+                ]
+            },
+            "startServer": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\" /sw/sysadmin/sysadmin/strudel-scripts/startup-checker.sh ; rm -f ~/.vnc/clearpass ; touch ~/.vnc/clearpass ; chmod 600 ~/.vnc/clearpass ; passwd=\"'$'\"( dd if=/dev/urandom bs=1 count=8 2>/dev/null | md5sum | cut -b 1-8 ) ; echo \"'$'\"passwd > ~/.vnc/clearpass ; cat ~/.vnc/clearpass | vncpasswd -f > ~/.vnc/passwd ; chmod 600 ~/.vnc/passwd ; vncserver -geometry {resolution}\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "^.*?desktop is \\S+(?P<vncDisplay>:[0-9]+)\\s*$"
+                ],
+                "requireMatch": true
+            },
+            "stop": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "'vncserver -kill {vncDisplay}'",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "stopForRestart": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "'vncserver -kill {vncDisplay}'",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "tunnel": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": true,
+                "cmd": "{sshBinary} -A -c {cipher} -t -t -oStrictHostKeyChecking=no -L {localPortNumber}:localhost:{remotePortNumber} -l {username} {loginHost} \"echo tunnel_hello; bash\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "local",
+                "loop": false,
+                "regex": [
+                    "tunnel_hello"
+                ],
+                "requireMatch": true
+            },
+            "username": null,
+            "visibility": {
+                "advancedCheckBoxPanel": true,
+                "cipherPanel": "Advanced",
+                "debugCheckBoxPanel": "Advanced",
+                "loginHostPanel": false,
+                "optionsDialog": false,
+                "projectPanel": false,
+                "resolutionPanel": "Advanced",
+                "resourcePanel": false,
+                "usernamePanel": true
+            },
+            "vncDisplay": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": null,
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "webDavCloseWindow": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"export DBUS_SESSION_BUS_ADDRESS={dbusSessionBusAddress};export DISPLAY={vncDisplay}; wmctrl -F -i -c {webDavWindowID}\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "webDavIntermediatePort": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": null,
+                "failFatal": false,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "webDavMount": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"/usr/bin/ssh -oStrictHostKeyChecking=no localhost \\\"export DBUS_SESSION_BUS_ADDRESS={dbusSessionBusAddress};echo \\\\\\\"import pexpect;child = pexpect.spawn('gvfs-mount dav://{localUsername}@localhost:{remoteWebDavPortNumber}/{homeDirectoryWebDavShareName}');child.expect('Password: ');child.sendline('{vncPasswd}');child.expect(pexpect.EOF);child.close();print 'gvfs-mount returned ' + str(child.exitstatus)\\\\\\\" {pipe} python\\\"\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "^gvfs-mount returned (?P<webDavMountingExitCode>.*)$"
+                ],
+                "requireMatch": true
+            },
+            "webDavRemotePort": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"/usr/local/bin/get_ephemeral_port.py\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "^(?P<remoteWebDavPortNumber>[0-9]+)$"
+                ],
+                "requireMatch": true
+            },
+            "webDavTunnel": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": true,
+                "cmd": "{sshBinary} -A -c {cipher} -t -t -oStrictHostKeyChecking=no -oExitOnForwardFailure=yes -R {remoteWebDavPortNumber}:localhost:{localWebDavPortNumber} -l {username} {loginHost} 'echo tunnel_hello; bash'",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "local",
+                "loop": false,
+                "regex": [
+                    "tunnel_hello"
+                ],
+                "requireMatch": true
+            },
+            "webDavUnmount": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"export DBUS_SESSION_BUS_ADDRESS={dbusSessionBusAddress};export DISPLAY={vncDisplay};timeout 1 gvfs-mount --unmount-scheme dav\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "webDavWindowID": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"export DBUS_SESSION_BUS_ADDRESS={dbusSessionBusAddress}; DISPLAY={vncDisplay} xwininfo -root -tree\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "^\\s+(?P<webDavWindowID>\\S+)\\s+\"{homeDirectoryWebDavShareName}.*Browser.*$"
+                ],
+                "requireMatch": true
+            }
+        },
+        "Standard Interactive Session": {
+            "__class__": "siteConfig",
+            "__module__": "siteConfig",
+            "agent": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": null,
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "authURL": null,
+            "authorizedKeysFile": null,
+            "dbusSessionBusAddress": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"/usr/bin/ssh {execHost} 'export DISPLAY={vncDisplay};timeout 15 /usr/local/bin/cat_dbus_session_file.sh'\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "^DBUS_SESSION_BUS_ADDRESS=(?P<dbusSessionBusAddress>.*)$"
+                ],
+                "requireMatch": true
+            },
+            "defaults": {
+                "jobParams_hours": 48,
+                "jobParams_mem": 4,
+                "jobParams_ppn": 1
+            },
+            "directConnect": false,
+            "displayStrings": {
+                "__class__": "sshKeyDistDisplayStrings",
+                "__module__": "siteConfig",
+                "createNewKeyDialogNewPassphraseEmptyForbidden": "Sorry, empty passphrases are forbidden.",
+                "createNewKeyDialogNewPassphraseMismatch": "Passphrases don't match",
+                "createNewKeyDialogNewPassphraseTooShort": "Passphrase is too short.",
+                "helpEmailAddress": "help@massive.org.au",
+                "networkError": "It looks like a network error has occured. You may be able to resume your work by logging in again.",
+                "newPassphrase": "Please enter a new passphrase",
+                "newPassphraseEmptyForbidden": "Sorry, you can't use an empty passphrase. Please enter a new passphrase",
+                "newPassphraseMismatch": "Sorry, the passphrases don't match. Please enter a new passphrase",
+                "newPassphraseTitle": "Please enter a new passphrase",
+                "newPassphraseTooShort": "Sorry, the passphrase must be at least six character long. Please enter a new passphrase",
+                "passphrasePrompt": "Please enter the passphrase for you ssh key",
+                "passphrasePromptIncorrect": "Sorry, that passphrase was incorrect.\nPlease enter the passphrase for you SSH Key\nIf you have forgoten the passphrase for you key, you may need to delete it and create a new key.\nYou can find this option under the Identity menu.\n",
+                "passphrasePromptIncorrectl": "Sorry, that passphrase was incorrect. Please enter the passphrase for your ssh key",
+                "passwdPrompt": "Please enter the password for your Griffith account.",
+                "passwdPromptIncorrect": "Sorry, that password was incorrect.\nPlease enter the password for your Griffith account.",
+                "persistentMessage": "Would you like to leave your current session running so that you can reconnect later?",
+                "persistentMessagePersist": "Leave it running",
+                "persistentMessageStop": "Stop the desktop",
+                "qdelQueuedJob": "It looks like you've been waiting for a job to start.\nDo you want me to delete the job or leave it in the queue so you can reconnect later?\n",
+                "qdelQueuedJobNOOP": "Leave it in the queue (I'll reconnect later)",
+                "qdelQueuedJobQdel": "Delete the job",
+                "reconnectMessage": "An Existing Desktop was found. Would you like to reconnect or kill it and start a new desktop?",
+                "reconnectMessageNo": "New desktop",
+                "reconnectMessageYes": "Reconnect",
+                "temporaryKey": "\nWould you like to use the launchers old behaviour (entering a password every time you start a new desktop) or try the new behaviour (creating an ssh key pair and entering a passphrase the first time you use the launcher after reboot.)\n\nPasswords are recomended if this is a shared user account.\n\nSSH Keys are recommended if you are the only person who uses this account.\n\nThis option can be changed from the Identity menu.\n",
+                "temporaryKeyNo": "Use my SSH Key",
+                "temporaryKeyYes": "Use my password every time"
+            },
+            "displayWebDavInfoDialogOnRemoteDesktop": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"/usr/bin/ssh {execHost} 'echo -e \\\"You can access your local home directory in Nautilus File Browser, using the location:\\n\\ndav://{localUsername}@localhost:{remoteWebDavPortNumber}/{homeDirectoryWebDavShareName}\\n\\nYour one-time password is {vncPasswd}\\\" > ~/.vnc/\\$(hostname){vncDisplay}-webdav.txt'\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "execHost": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\" qstat -f {jobidNumber} | grep exec_host\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "^\\s*exec_host = (?P<execHost>[a-z]+[0-9]+)"
+                ],
+                "requireMatch": true
+            },
+            "getProjects": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"groups | sed 's@ @\\n@g'\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "^\\s*(?P<group>\\S+)\\s*$"
+                ],
+                "requireMatch": true
+            },
+            "listAll": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"qstat -u {username} | tail -n +6\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "^\\s*(?P<jobid>(?P<jobidNumber>[0-9]+).\\S+)\\s+\\S+\\s+\\S+\\s+(?P<jobname>STANDARD)\\s+(?P<sessionID>\\S+)\\s+(?P<nodes>\\S+)\\s+(?P<tasks>\\S+)\\s+(?P<mem>\\S+)\\s+(?P<reqTime>\\S+)\\s+(?P<state>[^C])\\s+(?P<elapTime>\\S+)\\s*$"
+                ],
+                "requireMatch": false
+            },
+            "loginHost": "gowonda2.rcs.griffith.edu.au",
+            "messageRegexs": [
+                {
+                    "__class__": "__regex__",
+                    "pattern": "^INFO:(?P<info>.*(?:\n|\r\n?))"
+                },
+                {
+                    "__class__": "__regex__",
+                    "pattern": "^WARN:(?P<warn>.*(?:\n|\r\n?))"
+                },
+                {
+                    "__class__": "__regex__",
+                    "pattern": "^ERROR:(?P<error>.*(?:\n|\r\n?))"
+                }
+            ],
+            "onConnectScript": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"/usr/bin/ssh {execHost} 'module load keyutility ; mountUtility.py'\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "openWebDavShareInRemoteFileBrowser": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"/usr/bin/ssh {execHost} \\\"export DBUS_SESSION_BUS_ADDRESS={dbusSessionBusAddress};/usr/bin/gconftool-2 --type=Boolean --set /apps/nautilus/preferences/always_use_location_entry true {ampersand}{ampersand} DISPLAY={vncDisplay} xdg-open dav://{localUsername}@localhost:{remoteWebDavPortNumber}/{homeDirectoryWebDavShareName}\\\"\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "otp": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "'cat ~/.vnc/clearpass'",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "^(?P<vncPasswd>\\S+)$"
+                ],
+                "requireMatch": true
+            },
+            "relabel": {
+                "label_ppn": "CPUs",
+                "label_ppn": "Walltime"
+            },
+            "runSanityCheck": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": null,
+                "failFatal": false,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "running": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"/sw/sysadmin/sysadmin/strudel-scripts/log-strudel-node-usage ; qstat -f {jobidNumber} \"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    ".*job_state = R.*"
+                ],
+                "requireMatch": true
+            },
+            "setDisplayResolution": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": null,
+                "failFatal": false,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "showStart": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": null,
+                "failFatal": false,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "siteRanges": {
+                "jobParams_ppn": [
+                    1,
+                    64
+                ]
+            },
+            "startServer": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\" /sw/sysadmin/sysadmin/strudel-scripts/startup-checker.sh ; rm -f ~/.vnc/clearpass ; touch ~/.vnc/clearpass ; chmod 600 ~/.vnc/clearpass ; passwd=\"'$'\"( dd if=/dev/urandom bs=1 count=8 2>/dev/null | md5sum | cut -b 1-8 ) ; echo \"'$'\"passwd > ~/.vnc/clearpass ; cat ~/.vnc/clearpass | vncpasswd -f > ~/.vnc/passwd ; chmod 600 ~/.vnc/passwd ;  echo \\\" /sw/sysadmin/sysadmin/strudel-scripts/remove-old-vnc-pids.sh ; /sw/sysadmin/sysadmin/strudel-scripts/vnc-log-delete.sh ; vncserver -geometry {resolution} ; sleep 10000000000\\\" | qsub -l ncpus={ppn},queue=adminq,walltime={hours},mem={mem}g -N STANDARD  -o .vnc/ -e .vnc/ \"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "^(?P<jobid>(?P<jobidNumber>[0-9]+)\\.\\S+)\\s*$"
+                ],
+                "requireMatch": true
+            },
+            "stop": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\" qdel {jobidNumber}\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "stopForRestart": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"qdel {jobidNumber}\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "tunnel": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": true,
+                "cmd": "{sshBinary} -A -c {cipher} -t -t -oStrictHostKeyChecking=no -L {localPortNumber}:{execHost}:{remotePortNumber} -l {username} {loginHost} \"echo tunnel_hello; bash\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "local",
+                "loop": false,
+                "regex": [
+                    "tunnel_hello"
+                ],
+                "requireMatch": true
+            },
+            "username": null,
+            "visibility": {
+                "advancedCheckBoxPanel": true,
+                "cipherPanel": "Advanced",
+                "debugCheckBoxPanel": "Advanced",
+                "jobParams_hours": true,
+                "jobParams_mem": true,
+                "jobParams_nodes": false,
+                "jobParams_ppn": true,
+                "label_hours": false,
+                "label_mem": true,
+                "label_nodes": false,
+                "label_ppn": true,
+                "resolutionPanel": "Advanced",
+                "resourcePanel": true,
+                "usernamePanel": true
+            },
+            "vncDisplay": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "'cat ~/.vnc/{execHost}*.log'",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "port 59(?P<vncDisplay>[0-9]+)"
+                ],
+                "requireMatch": true
+            },
+            "webDavCloseWindow": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"/usr/bin/ssh {execHost} 'export DBUS_SESSION_BUS_ADDRESS={dbusSessionBusAddress};export DISPLAY={vncDisplay}; wmctrl -F -i -c {webDavWindowID}'\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "webDavIntermediatePort": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"/usr/local/bin/get_ephemeral_port.py\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "exec",
+                "loop": false,
+                "regex": [
+                    "^(?P<intermediateWebDavPortNumber>[0-9]+)$"
+                ],
+                "requireMatch": true
+            },
+            "webDavMount": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"/usr/bin/ssh {execHost} \\\"export DBUS_SESSION_BUS_ADDRESS={dbusSessionBusAddress};echo \\\\\\\"import pexpect;child = pexpect.spawn('gvfs-mount dav://{localUsername}@localhost:{remoteWebDavPortNumber}/{homeDirectoryWebDavShareName}');child.expect('Password: ');child.sendline('{vncPasswd}');child.expect(pexpect.EOF);child.close();print 'gvfs-mount returned ' + str(child.exitstatus)\\\\\\\" {pipe} python\\\"\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "^gvfs-mount returned (?P<webDavMountingExitCode>.*)$"
+                ],
+                "requireMatch": true
+            },
+            "webDavRemotePort": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"/usr/local/bin/get_ephemeral_port.py\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "exec",
+                "loop": false,
+                "regex": [
+                    "^(?P<remoteWebDavPortNumber>[0-9]+)$"
+                ],
+                "requireMatch": true
+            },
+            "webDavTunnel": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": true,
+                "cmd": "{sshBinary} -A -c {cipher} -t -t -oStrictHostKeyChecking=no -oExitOnForwardFailure=yes -R {remoteWebDavPortNumber}:localhost:{localWebDavPortNumber} -l {username} {execHost} \"echo tunnel_hello; bash\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "local",
+                "loop": false,
+                "regex": [
+                    "tunnel_hello"
+                ],
+                "requireMatch": true
+            },
+            "webDavUnmount": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"/usr/bin/ssh {execHost} 'export DBUS_SESSION_BUS_ADDRESS={dbusSessionBusAddress};export DISPLAY={vncDisplay};timeout 1 gvfs-mount --unmount-scheme dav'\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    null
+                ],
+                "requireMatch": false
+            },
+            "webDavWindowID": {
+                "__class__": "cmdRegEx",
+                "__module__": "siteConfig",
+                "async": false,
+                "cmd": "\"/usr/bin/ssh {execHost} 'export DBUS_SESSION_BUS_ADDRESS={dbusSessionBusAddress}; DISPLAY={vncDisplay} xwininfo -root -tree'\"",
+                "failFatal": true,
+                "formatFatal": false,
+                "host": "login",
+                "loop": false,
+                "regex": [
+                    "^\\s+(?P<webDavWindowID>\\S+)\\s+\"{homeDirectoryWebDavShareName}.*Browser.*$"
+                ],
+                "requireMatch": true
+            }
+        }
+    }
+]
